@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Search books
+{% endblock %}
+
+{% block body %}
+    <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+        <ul class="navbar-nav justify-content-end">
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
+    </nav>
+
+    <h1>Search books</h1>
+
+    {{ message }}
+
+    <form class="input-group mb-3" action="{{ url_for('search') }}" method="post">
+        <input type="text" class="form-control" placeholder="What are you looking for?" name="search_text">
+        <div class="input-group-append">
+          <button class="btn btn-success" type="submit">Search</button>
+        </div>
+    </form>
+
+    <div class="text-danger">
+    {{ error }}
+    </div>
+
+{% endblock %}

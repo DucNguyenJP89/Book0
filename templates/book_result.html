@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Search Results
+{% endblock %}
+
+{% block body %}
+    <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+        <ul class="navbar-nav justify-content-end">
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
+    </nav>
+
+    <h1><strong>Search results</strong></h1>
+
+    <a href="{{ url_for('home') }}" class="btn btn-primary" role="<button type="button" name="button">Search again</a>
+    {% if book_count == 0 %}
+
+    <h2><strong>No book found</strong></h2>
+
+    {% else %}
+        <h2><span style="color:blue">{{ book_count }}</span> books found!</h2>
+
+        <table class="table table-bordered">
+            <tr>
+                <th>ISBN</th>
+                <th>Title</th>
+                <th>Author</th>
+            </tr>
+            {% for book in search_result %}
+            <tr>
+                <td><a href="{{ url_for('book', isbn=book.isbn) }}" target="_blank">{{ book.isbn }}</a></td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+            </tr>
+
+            {% endfor %}
+      {% endif %}
+
+{% endblock %}

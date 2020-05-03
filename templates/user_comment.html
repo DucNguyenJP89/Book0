@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}Comments{% endblock %}
+
+{% block body %}
+    <h1>Comments</h1>
+
+    <ul>
+        {% for comment in comments %}
+            <li>User: {{ comment.username }}</li>
+            <li>Comment: {{ comment.comment_content }}</li>
+        {% else %}
+            <li>No comment for this book</li>
+        {% endfor %}
+    </ul>
+
+    {% if commented_flag == True %}
+
+    <h3>You already commented about this book</h3>
+
+    {% else %}
+        <form class="input-group mb-3" action="{{ url_for('book', isbn=book.isbn) }}" method="post">
+            <input type="textarea" name="comment_content" rows="8" cols="100" class="form-control" placeholder="Comment here"></textarea>
+            <div class="input-group-append">
+                <button class="btn btn-success" type="submit">Comment</button>
+            </div>
+        </form>
+    {% endif %}
+
+{% endblock %}
