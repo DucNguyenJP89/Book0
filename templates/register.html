@@ -4,7 +4,7 @@
         <title>Register</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/fc337e1b3e.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="login.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
     </head>
 
     <body>
@@ -30,7 +30,7 @@
 
                   <p class="d-block text-center text-danger mt-2 small">{{ error }}</p>
 
-                  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Login</button>
+                  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Register</button>
                   <p class="d-block text-center mt-2 small">Already registered? <a href="{{ url_for('home') }}">Login here</a></p>
                 </form>
               </div>
