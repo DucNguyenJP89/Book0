@@ -1,27 +1,40 @@
-{% extends "layout.html" %}
+<!doctype html>
+<html>
+    <head>
+        <title>Login</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://kit.fontawesome.com/fc337e1b3e.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="login.css">
+    </head>
 
-{% block title %}
-    Login
-{% endblock %}
+    <body>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-10 col-xl-9 mx-auto">
+            <div class="card card-signin flex-row my-5">
+              <div class="card-img-left d-none d-md-flex">
+                 <!-- Background image for card set in CSS! -->
+              </div>
+              <div class="card-body">
+                <h5 class="card-title text-center">Login</h5>
+                <form class="form-signin" action="{{ url_for('login') }}" method="post">
+                  <div class="form-label-group">
+                    <input type="text" id="inputUserame" class="form-control" placeholder="Username" name="username" required autofocus>
+                    <label for="inputUserame">Username</label>
+                  </div>
 
-{% block body %}
-    <h1>Login</h1>
-        <form action={{ url_for('login') }} method="post">
+                  <div class="form-label-group">
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
+                    <label for="inputPassword">Password</label>
+                  </div>
 
-            <div class="form-group">
-                <label for="username">Username:</label><br>
-                <input type="text" name="username"><br>
-                <label for="password">Password:</label><br>
-                <input type="password" name="password">
+                  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Login</button>
+                  <p class="d-block text-center mt-2 small">Haven't registered yet? <a href="register.html">Register here</a></p>
+                </form>
+              </div>
             </div>
-
-            <div class="text-danger">
-            {{ error }}
-            </div>
-
-            <div class="form-group">
-                <button class="btn btn-primary">Login</button>
-            </div>
-        </form>
-
-{% endblock %}
+          </div>
+        </div>
+      </div>
+    </body>
+</html>
