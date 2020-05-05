@@ -53,6 +53,9 @@ def register():
     if db.execute("SELECT username FROM users WHERE username = :username", {"username": username}).rowcount != 0:
         error = "This username already existed. Please try another username."
         return render_template("register.html", error = error)
+    elif len(password) < 8:
+        error = "Password must be longer than 8 characters."
+        return render_template("register.html", error = error)
     else:
         db.execute("INSERT INTO users (username, password) VALUES (:username, :password)", {"username": username, "password": password})
         db.commit()
