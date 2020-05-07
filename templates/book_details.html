@@ -5,68 +5,97 @@
 {% endblock %}
 
 {% block body %}
-    <div class="w3-container" style="margin:40px">
-        <div class="w3-card">
-            <div class="w3-left">
-                <img src={{ url_for('static', filename='pic/default-cover.png') }} alt="Default Cover" style="max-width:200px">
-            </div>
-            <ul class="w3-ul w3-left w3-margin-left" style="width:50%">
-                <li><h3><strong>{{ book.title }}</strong></h3></li>
-                <li><strong>Author:</strong> {{ book.author }}</li>
-                <li><strong>Publication year:</strong> {{ book.year }}</li>
-                <li><strong>Goodreads Score:</strong> {{ average_rating }}</li>
-                <li><strong>Number of ratings:</strong> {{ work_ratings_count }}</li>
+    <div class="container mt-4 ml-4">
+        <div class="float-left mx-3 my-2 w-25">
+            <img src="{{ url_for('static', filename='pic/default-cover.png') }}" class="rounded-lg" alt="Default Cover" style="max-width:250px">
+        </div>
+
+        <div class="w-75 ml-3">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><h3>{{ book.title }}</h3></li>
+                <li class="list-group-item"><span style="font-weight:bold">Author:</span> {{ book.author }}</li>
+                <li class="list-group-item"><span style="font-weight:bold">Publication year:</span> {{ book.year }}</li>
+                <li class="list-group-item"><span style="font-weight:bold">Goodreads Score:</span> {{ average_rating }}</li>
+                <li class="list-group-item"><span style="font-weight:bold">Number of ratings:</span> {{ work_ratings_count }}</li>
             </ul>
         </div>
     </div>
 
-    <div class="w3-container" style="margin-left:40px;width:70%">
-        <h3>Users' comment</h3>
+    <div class="container mt-4 ml-5">
+        <h5>Users' comment</h5>
+    </div>
+
+    <div class="container my-3 ml-4">
         {% for comment in comments %}
-        <div class="w3-card">
-            <div class="w3-left" style="width:10%"><h3>{{ comment.username }}</h3></div>
-            <ul class="w3-ul w3-left w3-margin-left w3-text-grey" style="width:80%">
-                <li><strong>Rate score:</strong> {{ comment.rate_score }}</li>
-                <li><p>{{ comment.comment_content }}</p></li>
-            </ul>
+        <div class="container">
+            <div class="container">
+                <div class="float-left mx-3 my-2" style="max-width:120px">
+                    <img src="{{ url_for('static', filename="pic/avatar.png") }}" alt="avatar-default">
+                </div>
+
+                <div class="container float-left w-75">
+                    <p style="font-weight:bold">{{ comment.username }}</p>
+                    <p><span style="font-weight:bold">Rate score:</span> {{ comment.rate_score }}</p>
+                    <p>{{ comment.comment_content }}</p>
+                </div>
+            </div>
         </div>
         {% else %}
-        <p class="w3-text-grey">There's no comment for this book yet.</p>
+        <div class="container ml-4">
+            <p class="text-muted">There's no comment for this book yet.</p>
+        </div>
         {% endfor %}
     </div>
 
-    <div class="w3-container" style="margin-left:40px;width:65%">
+    <div class="container my-3 ml-5">
     {% if user_check == True %}
 
-        <div class="w3-container w3-text-grey">
-            <h4>You have already commented.</h4>
+        <div class="container ml-4">
+            <p class="text-muted">You have already commented.</p>
         </div>
 
     {% else %}
 
-        <h3>Leave your comment<h3>
+            <h5>Leave your comment</h5>
 
-        <form action="{{ url_for('book', isbn=book.isbn) }}" method="post">
-            <div class="w3-container" style="width:100%;margin-bottom:12px">
-                <div class="w3-show-inline">
-                    <h4>Rate this book:</h4>
-                    <div class="w3-bar">
-                        <input class="w3-radio" type="radio" name="rating" value=1><label>1</label>
-                        <input class="w3-radio" type="radio" name="rating" value=2><label>2</label>
-                        <input class="w3-radio" type="radio" name="rating" value=3><label>3</label>
-                        <input class="w3-radio" type="radio" name="rating" value=4><label>4</label>
-                        <input class="w3-radio" type="radio" name="rating" value=5 checked><label>5</label>
+            <form action="{{ url_for('book', isbn=book.isbn) }}" method="post">
+                <div class="container my-2">
+                    <p>Rate this book:</p>
+                    <div class="form-check-inline">
+                        <label class="form-check-label" for="radio1">
+                          <input type="radio" class="form-check-input" id="radio1" name="rate_score" value=1>1
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <label class="form-check-label" for="radio2">
+                          <input type="radio" class="form-check-input" id="radio2" name="rate_score" value=2>2
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <label class="form-check-label" for="radio3">
+                          <input type="radio" class="form-check-input" id="radio3" name="rate_score" value=3>3
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <label class="form-check-label" for="radio4">
+                          <input type="radio" class="form-check-input" id="radio4" name="rate_score" value=4>4
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <label class="form-check-label" for="radio5">
+                          <input type="radio" class="form-check-input" id="radio5" name="rate_score" value=5 checked>5
+                        </label>
                     </div>
                 </div>
-            </div>
-            <div class="w3-container" style="width:100%;margin-bottom:12px">
-                <textarea class="form-control" name="comment_content" rows="8" cols="50" placeholder="Leave your comment here"></textarea>
-            </div>
 
-            <div class="w3-container">
-                <button class="btn btn-primary">Comment</button>
-            </div>
-        </form>
+                <div class="container float-left my-2">
+                    <textarea class="form-control w-50" name="comment_content" rows="5" cols="50" placeholder="Leave your comment here"></textarea>
+                </div>
+
+                <div class="container my-2">
+                    <button class="btn btn-primary">Comment</button>
+                </div>
+            </form>
     {% endif %}
     </div>
 
