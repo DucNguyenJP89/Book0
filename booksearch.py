@@ -70,7 +70,7 @@ def search():
     search_str = '%'+user_input+'%'
     search_result = db.execute("SELECT * FROM books WHERE isbn LIKE :string OR author LIKE :string OR title LIKE :string", {"string": search_str}).fetchall()
     book_count = len(search_result)
-    return render_template("book_result.html", book_count = book_count, search_result = search_result)
+    return render_template("book_result.html", book_count = book_count, search_result = search_result, user_input=user_input)
 
 @app.route("/books/<string:isbn>", methods=["POST", "GET"])
 def book(isbn):
@@ -89,7 +89,7 @@ def book(isbn):
         user_check = True
 
     if request.method == "POST":
-            rate_score = int(request.form.get("rating"))
+            rate_score = int(request.form.get("rate_score"))
             comment_content = request.form.get("comment_content")
             comment={"username": username, "rate_score": rate_score, "comment_content": comment_content}
             comments.append(comment)
