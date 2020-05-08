@@ -5,7 +5,8 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container mt-4 ml-4">
+
+    <div class="container mx-auto w-100">
         <div class="float-left mx-3 my-2 w-25">
             <img src="{{ url_for('static', filename='pic/default-cover.png') }}" class="img-fluid rounded-lg" alt="Default Cover" style="max-width:250px">
         </div>
@@ -13,90 +14,95 @@
         <div class="w-75 ml-3">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"><h3>{{ book.title }}</h3></li>
-                <li class="list-group-item"><span style="font-weight:bold">Author:</span> {{ book.author }}</li>
-                <li class="list-group-item"><span style="font-weight:bold">Publication year:</span> {{ book.year }}</li>
-                <li class="list-group-item"><span style="font-weight:bold">Goodreads Score:</span> {{ average_rating }}</li>
-                <li class="list-group-item"><span style="font-weight:bold">Number of ratings:</span> {{ work_ratings_count }}</li>
+                <li class="list-group-item">Author: {{ book.author }}</li>
+                <li class="list-group-item">Publication year: {{ book.year }}</li>
+                <li class="list-group-item">Goodreads Score: {{ average_rating }}</li>
+                <li class="list-group-item">Number of ratings: {{ work_ratings_count }}</li>
             </ul>
         </div>
     </div>
 
-    <div class="container mt-4 ml-5">
-        <h5>Users' comment</h5>
-    </div>
+    <div class="container mt-5 mb-3 mx-auto w-75">
+        <div class="card my-3 rounded-lg">
+            <div class="card-header bg-primary text-white">
+                <h5>Users' comment</h5>
+            </div>
 
-    <div class="container my-3 ml-4">
-        {% for comment in comments %}
-        <div class="container">
-            <div class="container">
-                <div class="float-left mx-3 my-2" style="max-width:120px">
-                    <img src="{{ url_for('static', filename="pic/avatar.png") }}" alt="avatar-default">
-                </div>
+            <div class="card-body">
+            {% for comment in comments %}
+                <div class="container">
+                    <div class="float-left my-2" style="max-width:120px">
+                        <img src="{{ url_for('static', filename="pic/avatar.png") }}" alt="avatar-default" style="opacity:50%">
+                    </div>
 
-                <div class="container float-left w-75">
-                    <p style="font-weight:bold">{{ comment.username }}</p>
-                    <p><span style="font-weight:bold">Rate score:</span> {{ comment.rate_score }}</p>
-                    <p>{{ comment.comment_content }}</p>
+                    <div class="container float-left ml-3 w-75">
+                        <p>{{ comment.username }}</p>
+                        <p>Rate score: {{ comment.rate_score }}</p>
+                        <p class="font-italic">{{ comment.comment_content }}</p>
+                    </div>
                 </div>
+            {% else %}
+                <div class="container mx-auto">
+                    <p class="text-muted text-center">There's no comment for this book yet.</p>
+                </div>
+            {% endfor %}
             </div>
         </div>
-        {% else %}
-        <div class="container ml-4">
-            <p class="text-muted">There's no comment for this book yet.</p>
+
+        <div class="card rounded-lg">
+            {% if user_check == True %}
+
+            <div class="card-body bg-light">
+                <p class="text-muted text-center">You have already commented.</p>
+            </div>
+
+            {% else %}
+            <div class="card-header bg-primary text-white">
+                <h5>Leave your comment</h5>
+            </div>
+
+            <div class="card-body mb-2">
+                <form action="{{ url_for('book', isbn=book.isbn) }}" method="post">
+                    <div class="container my-2">
+                        <p>Rate this book:</p>
+                        <div class="form-check-inline">
+                            <label class="form-check-label" for="radio1">
+                              <input type="radio" class="form-check-input" id="radio1" name="rate_score" value=1>1
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label" for="radio2">
+                              <input type="radio" class="form-check-input" id="radio2" name="rate_score" value=2>2
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label" for="radio3">
+                              <input type="radio" class="form-check-input" id="radio3" name="rate_score" value=3>3
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label" for="radio4">
+                              <input type="radio" class="form-check-input" id="radio4" name="rate_score" value=4>4
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label" for="radio5">
+                              <input type="radio" class="form-check-input" id="radio5" name="rate_score" value=5 checked>5
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="container float-left my-2">
+                        <textarea class="form-control w-75" name="comment_content" rows="8" cols="60" placeholder="Leave your comment here"></textarea>
+                    </div>
+
+                    <div class="container mt-2">
+                        <button class="btn btn-primary">Comment</button>
+                    </div>
+                </form>
+            </div>
+            {% endif %}
         </div>
-        {% endfor %}
-    </div>
-
-    <div class="container my-3 ml-5">
-    {% if user_check == True %}
-
-        <div class="container ml-4">
-            <p class="text-muted">You have already commented.</p>
-        </div>
-
-    {% else %}
-
-            <h5>Leave your comment</h5>
-
-            <form action="{{ url_for('book', isbn=book.isbn) }}" method="post">
-                <div class="container my-2">
-                    <p>Rate this book:</p>
-                    <div class="form-check-inline">
-                        <label class="form-check-label" for="radio1">
-                          <input type="radio" class="form-check-input" id="radio1" name="rate_score" value=1>1
-                        </label>
-                    </div>
-                    <div class="form-check-inline">
-                        <label class="form-check-label" for="radio2">
-                          <input type="radio" class="form-check-input" id="radio2" name="rate_score" value=2>2
-                        </label>
-                    </div>
-                    <div class="form-check-inline">
-                        <label class="form-check-label" for="radio3">
-                          <input type="radio" class="form-check-input" id="radio3" name="rate_score" value=3>3
-                        </label>
-                    </div>
-                    <div class="form-check-inline">
-                        <label class="form-check-label" for="radio4">
-                          <input type="radio" class="form-check-input" id="radio4" name="rate_score" value=4>4
-                        </label>
-                    </div>
-                    <div class="form-check-inline">
-                        <label class="form-check-label" for="radio5">
-                          <input type="radio" class="form-check-input" id="radio5" name="rate_score" value=5 checked>5
-                        </label>
-                    </div>
-                </div>
-
-                <div class="container float-left my-2">
-                    <textarea class="form-control w-50" name="comment_content" rows="5" cols="50" placeholder="Leave your comment here"></textarea>
-                </div>
-
-                <div class="container my-2">
-                    <button class="btn btn-primary">Comment</button>
-                </div>
-            </form>
-    {% endif %}
     </div>
 
 {% endblock %}
